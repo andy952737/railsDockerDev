@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/web/DockerFile
+    image: nginx
+    ports:
+        - "82:82"
+    volumes:
+      - ./nginx.conf:/usr/local/etc/nginx/nginx.conf
+      - ./projects:/Users/lien-ankuan/www/deploy_docker/docker_app/
+      #- ./nginx-logs:/var/log/nginx
+    restart: always
+  db:
+    image: postgres:13
+    command: ["postgres", "-c", "fsync=false", "-c", "full_page_writes=off"]
+    environment:
+      POSTGRES_USER: deploy
+      POSTGRES_PASSWORD: 110177
+      POSTGRES_DB: deploy_test_db
+    # volumes:
+    #   - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  app:
+    build: .
+      dockerfile: ./docker/app/DockerFile
+    command: bash -c "bundle exec puma -C config/puma.rb"
+    ports:
+      - "3000:3000"   
+    depends_on:
+      - db
+      #- postgres
+    # volumes:
+    #   - /myapp_data:/app/data
+    # environment:
+      #DATABASE_URL: postgres://your_postgres_user:your_postgres_password@db/your_postgres_database  # 数据库连接字符串
+
+  # nginx:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/web/DockerFile
+  #   depends_on:
+  #     - app
+  #   ports:
+  #     - 80:80
