@@ -55,8 +55,8 @@ jobs:
       #- name: Run bundler-audit
       #  run: bundle exec bundler-audit --update
 
-      - name: Update Bundler Configuration
-        run: bundle lock --add-platform x86_64-linux
+      #- name: Update Bundler Configuration
+      #  run: bundle lock --add-platform x86_64-linux
       # Add or replace any other lints here
       # - name: Security audit dependencies
       #   run: bin/bundler-audit --update
