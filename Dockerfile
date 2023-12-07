@@ -24,4 +24,17 @@ ENV RAILS_ENV production
 ENV RAILS_SERVE_STATIC_FILES yes
 ENV RAILS_LOG_TO_STDOUT yes
 
-CMD ["bundle", "exec", "rails", "server"]
+#CMD ["bundle", "exec", "rails", "server"]
+
+# 下载安装 Nginx
+RUN apt-get update && apt-get install -y nginx
+#FROM nginx
+
+# 复制 Nginx 配置文件到容器中
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# 暴露端口
+EXPOSE 80
+
+# 启动 Nginx 和 Rails 服务器
+CMD service nginx start && bundle exec rails server -b 0.0.0.0

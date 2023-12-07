@@ -1,6 +1,4 @@
-# Rails+Docker
-> ruby2.7.2, Rails7.0 
+# Docker+Rails+PostgreSQL
+> ruby2.7.2, Rails7.0, 
 
-# depoy
-- Dockerfile
-- Nginx!# railsDockerDev
+# deploy docker-compose ruby2.7.2,rails7 
